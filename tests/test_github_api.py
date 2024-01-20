@@ -1,5 +1,5 @@
 from infra.utils import convert_query_params_to_dict, add_params_to_url
-from logic.imp_github_api_requests import get_list_of_issues
+from logic.imp_github_api_requests import get_list_of_issues, create_issue
 
 
 def test_issues_api(get_github_api_url, get_config, get_logger, get_test_name, get_github_api_issues_url):
@@ -30,3 +30,24 @@ def test_issues_api(get_github_api_url, get_config, get_logger, get_test_name, g
     assert response[0]["labels"][0]["name"] == LABEL_NAME, f"label name should be {LABEL_NAME}"
 
     # PART THREE
+
+    status_code, is_success, response = create_issue(url=get_github_api_issues_url,
+                                                     token=get_config["TOKEN_INFO"]["token_val"],
+                                                     logger=get_logger,
+                                                     title="Tomer's issues",
+                                                     body="This issue was created via REST API from Python by Tomer",
+                                                     labels=["practice1"],
+                                                     assignees=["topq-practice"]
+                                                     )
+
+    # PART FOUR
+    NUMBER_OF_NEW_ISSUE = 4
+
+    assert is_success, f"status code is invalid, its should be equal to 2xx, and not to {status_code}"
+    assert len(response) == 1, f"Created {1} issue"
+    assert response[0]["number"] == NUMBER_OF_NEW_ISSUE, f"New issue number suppose to be eqaul to {NUMBER_OF_NEW_ISSUE}"
+
+
+
+
+
