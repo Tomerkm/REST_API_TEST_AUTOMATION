@@ -3,6 +3,7 @@ from urllib.parse import urljoin
 from requests.models import PreparedRequest
 import urllib.parse
 
+
 def convert_text_json_to_dict(data):
     return json.loads(data)
 
@@ -24,6 +25,7 @@ def add_params_to_url(url: str, params: dict):
 
 def convert_query_params_to_dict(params: str):
     return urllib.parse.parse_qs(params)
+
 
 def convert_dict_to_string_json(data):
     return json.dumps(data)

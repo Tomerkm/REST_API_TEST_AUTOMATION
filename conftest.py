@@ -68,3 +68,14 @@ def get_github_api_issues_url(get_config):
 
     return url_join_between_paths(get_config["ROOT_URL"]["github_api_url"], get_issues_url_with_owners_and_name)
 
+
+@pytest.fixture(scope="function")
+def get_github_api_update_issue_url(get_config):
+    repo_owner = get_config["PARAM_INFO"]["repository_owner"]
+    repo_name = get_config["PARAM_INFO"]["repository_name"]
+    issue_number = get_config["PARAM_INFO"]["issue_num"]
+
+    get_update_url_with_params = get_config["GITHUB_METHODS"]["update_issue_url"].format(repo_owner, repo_name,
+                                                                                         issue_number)
+
+    return url_join_between_paths(get_config["ROOT_URL"]["github_api_url"], get_update_url_with_params)
